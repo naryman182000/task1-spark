@@ -4,17 +4,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 url = "http://bit.ly/w-data"
-s_data = pd.read_csv(url)
-print("Data imported successfully")
-
-s_data.head(10)
-s_data.plot(x='Hours', y='Scores', style='o')
+n_data = pd.read_csv(url)
+n_data.head(10)
+n_data.plot(x='Hours', y='Scores', style='o')
 plt.title('Hours vs Percentage')
 plt.xlabel('Hours Studied')
 plt.ylabel('Percentage Score')
 plt.show()
-X = s_data.iloc[:,0 :-1].values
-y = s_data.iloc[:, 1].values
+X = n_data.iloc[:,0 :-1].values
+y = n_data.iloc[:, 1].values
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y,
@@ -24,16 +22,15 @@ from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, y_train)
 
-print("Training complete.")
-# Plotting the regression line
+
 line = regressor.coef_ * X + regressor.intercept_
 
 # Plotting for the test data
 plt.scatter(X, y)
 plt.plot(X, line);
 plt.show()
-print(X_test)  # Testing data - In Hours
-y_pred = regressor.predict(X_test)  # Predicting the scores
+
+y_pred = regressor.predict(X_test)
 df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
 df
 hours =9.5
